@@ -17,7 +17,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 - [x] Refactoring code and Optimize logic
 - [ ] Add Ncurses
-- [ ] Create an executable gem
+- [x] Create an executable gem
 - [ ] Take input from user instead of random cells
 - [ ] Add predefined cells like Glider, Gun, Blink, Box
 - [ ] Command line arguments
