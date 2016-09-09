@@ -26,6 +26,15 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 - [ ] Different colors of cells
 
 
+## Rules
+
+- Any live cell with fewer than two live neighbours dies, as if by needs caused by underpopulation.
+- Any live cell with more than three live neighbours dies, as if by overcrowding.
+- Any live cell with two or three live neighbours lives, unchanged, to the next generation.
+- Any dead cell with exactly three live neighbours becomes a live cell.
+
+
+
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/vs4vijay/golife. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
