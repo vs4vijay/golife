@@ -1,3 +1,4 @@
+#!/usr/bin/env ruby
 # Conway's Game of Life Implementation in Ruby
 # Author: Vijay Soni(vs4vijay@gmail.com)
 class Golife
@@ -20,9 +21,9 @@ class Golife
     end
   end
   
-  def make_playground(w, h, type = "random")
-    (0..w).map do |i|
-      (0..h).map do |j|
+  def make_playground(rows, cols, type = "random")
+    (0..rows).map do |i|
+      (0..cols).map do |j|
 	if type == "empty"
 	  cell_alive = false
 	elsif type == "random"
@@ -35,9 +36,9 @@ class Golife
 
   def show_playground
     puts "\tGame of Life [Iteration: #{@iteration}]"
-    @playground.each_with_index do |rows, i|
+    @playground.each_with_index do |row, i|
       print "|"    
-      rows.each_with_index do |cell, j|
+      row.each_with_index do |cell, j|
 	print " #{cell.alive ? '*' : ' '} |"
       end
       print "\n\n"
@@ -46,8 +47,8 @@ class Golife
 
   def next_generation
     @iteration += 1 
-    @playground = @playground.map do |rows|
-      rows.map do |cell|
+    @playground = @playground.map do |row|
+      row.map do |cell|
         # cell.alive = Random.new.rand(0..1) == 1
 	live_neighbours = neighbours_of(cell).select{|c| c.alive?}
 	if(cell.alive? && (live_neighbours.size == 2 || live_neighbours.size == 3))
