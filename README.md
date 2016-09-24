@@ -1,6 +1,7 @@
 # Golife
 Conway's Game of Life Implementation in Ruby
 
+![Golife Gif](golife.gif)
 
 ## Installation
 ```
