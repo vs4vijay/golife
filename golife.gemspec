@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'golife/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "golife"
+  spec.name          = "golife-cli"
   spec.version       = Golife::VERSION
   spec.authors       = ["vs4vijay"]
   spec.email         = ["vs4vijay@gmail.com"]
