@@ -32,40 +32,52 @@ class GolifeTest < Minitest::Test
 	  			assert_equal dim.length, 10
 	  		end
 	  	end
+
+
+
 	  end
 
 	  describe "makes a playground" do
 	  	
-	  	it "will not make live cells in empty spaces" do
+	  	it "will randomly make live cells" do
+	  		5.times do
+	  			if Golife::Game.new != @golife
+	  				assert true
+	  			end
+	  		end
+	  	end
+
+	  	it "will return a collection" do
+	  		assert_equal @golife.make_playground(1,1).class, Array
+	  	end
+
+	  	it "will return a collection of cells" do
+	  		assert_equal @golife.make_playground(1,1)[0][0].class, Cell
+	  	end
+	  
+
+	  # end
+
+	  # describe "all methods function correctly" do 
+	  # 	before do
+	  # 		@golife.play
+	  # 	end
+
+	  # 	it " play" do
+
+	  # 	end
+
+	  # 	it "shows playground" do
 	  		
-	  	end
+	  # 	end
 
-	  	it "will randomly make live cells if random" do
+	  # 	it "moves to next generation" do
 	  		
-	  	end
+	  # 	end
 
-	  end
-
-	  describe "all methods function correctly" do 
-	  	before do
-	  		@golife.play
-	  	end
-
-	  	it " play" do
-
-	  	end
-
-	  	it "shows playground" do
+	  # 	it "will return neighbors of a cell" do
 	  		
-	  	end
-
-	  	it "moves to next generation" do
-	  		
-	  	end
-
-	  	it "will return neighbors of a cell" do
-	  		
-	  	end
+	  # 	end
 
 	  	
 	  end
