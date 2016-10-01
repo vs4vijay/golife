@@ -25,8 +25,8 @@ class Golife::Game
   end
   
   def make_playground(rows, cols, type = "random")
-    (0..rows).map do |i|
-      (0..cols).map do |j|
+    (1..rows).map do |i|
+      (1..cols).map do |j|
       	if type == "empty"
       	  cell_alive = false
       	elsif type == "random"
