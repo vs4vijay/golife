@@ -54,22 +54,33 @@ class GolifeTest < Minitest::Test
 	  	it "will return a collection of cells" do
 	  		assert_equal @golife.make_playground(1,1)[0][0].class, Cell
 	  	end
-	  
 
-	  # end
+	  end
 
-	  # describe "all methods function correctly" do 
-	  # 	before do
-	  # 		@golife.play
-	  # 	end
+	  describe "show playground" do 
 
-	  # 	it " play" do
+	  	it "will return a collection" do
+	  		assert_equal @golife.show_playground.class, Array
+	  	end
 
-	  # 	end
+	  	it "will print" do
+	  		assert_output() { @golife.show_playground }
+	  	end
 
-	  # 	it "shows playground" do
-	  		
-	  # 	end
+	  end
+
+	  describe "next generation" do
+
+
+	  	# it "modifies the board each generation" do
+
+	  	# end
+
+	  	it "increments the the generation count" do
+	  		before_next = @golife.generation
+	  		@golife.next_generation
+	  		assert @golife.generation == before_next + 1
+	  	end
 
 	  # 	it "moves to next generation" do
 	  		
@@ -78,9 +89,7 @@ class GolifeTest < Minitest::Test
 	  # 	it "will return neighbors of a cell" do
 	  		
 	  # 	end
-
-	  	
-	  end
+		end
 
 
 
