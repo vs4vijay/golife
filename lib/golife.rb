@@ -7,40 +7,40 @@ GAME_HEADING = "Game of Life"
 
 class Golife::Game
   attr_accessor :playground, :width, :height, :generation
- 
+
   def initialize
     self.generation = 0
     self.width = 10
     self.height = 10
-    self.playground = self.make_playground(self.height, self.width) 
+    self.playground = self.make_playground(self.height, self.width)
   end
 
   def play
     loop do
-      system "clear" 
+      system "clear"
       show_playground
       sleep SLEEP_INTERVAL
       next_generation
     end
   end
-  
+
   def make_playground(rows, cols, type = "random")
-    (0..rows).map do |i|
-      (0..cols).map do |j|
+    (1..rows).map do |i|
+      (1..cols).map do |j|
       	if type == "empty"
       	  cell_alive = false
       	elsif type == "random"
-      	  cell_alive = Random.new.rand(0..1) == 1 
+      	  cell_alive = Random.new.rand(0..1) == 1
       	end
       	Cell.new(i, j, cell_alive)
       end
-    end    
+    end
   end
 
   def show_playground
     puts "\t#{GAME_HEADING} [Generation: #{@generation}]"
     @playground.each_with_index do |row, i|
-      print "|"    
+      print "|"
       row.each_with_index do |cell, j|
 	      print " #{cell.alive ? '*' : ' '} |"
       end
@@ -49,27 +49,32 @@ class Golife::Game
   end
 
   def next_generation
-    @generation += 1 
-    @playground = @playground.map do |row|
-      row.map do |cell|
-        # cell.alive = Random.new.rand(0..1) == 1
-      	live_neighbours = neighbours_of(cell).select{|c| c.alive?}
-      	if(cell.alive? && (live_neighbours.size == 2 || live_neighbours.size == 3))
-      	  cell.live!
-      	elsif(cell.dead? && live_neighbours.size == 3)
-          cell.live!		
-      	else
-      	  cell.dead!
-      	end
+    @generation += 1
+
+    dying_cells   = []
+    growing_cells = []
+
+    @playground.each do |row|
+      row.each do |cell|
+        live_neighbours = neighbours_of(cell).select(&:alive?).length
+
+        if cell.alive? && (live_neighbours < 2 || live_neighbours > 3)
+          dying_cells << cell
+        elsif cell.dead? && live_neighbours == 3
+          growing_cells << cell
+        end
       end
     end
+
+    dying_cells.each(&:dead!)
+    growing_cells.each(&:live!)
   end
 
   private
 
     def neighbours_of(cell)
       @playground.flatten.map do |n_cell|
-	       n_cell if [cell.x + 1, cell.x, cell.x - 1].include?(n_cell.x) && [cell.y + 1, cell.y, cell.y - 1].include?(n_cell.y) 
+	       n_cell if [cell.x + 1, cell.x, cell.x - 1].include?(n_cell.x) && [cell.y + 1, cell.y, cell.y - 1].include?(n_cell.y)
       end.compact.reject{|c| c.x == cell.x && c.y == cell.y}
     end
 
@@ -106,6 +111,9 @@ class Cell
     "x: #{@x}, y: #{@y}"
   end
 
+  def ==(other)
+    x == other.x && y == other.y && alive == other.alive
+  end
 end
 
 Golife::Game.new.play if __FILE__ == $0
