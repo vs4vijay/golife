@@ -1,6 +1,7 @@
 # Conway's Game of Life Implementation in Ruby
 # Author: Vijay Soni(vs4vijay@gmail.com)
 require "golife/version"
+require "golife/playgrounds"
 
 SLEEP_INTERVAL = 0.2
 GAME_HEADING = "Game of Life"
@@ -8,11 +9,11 @@ GAME_HEADING = "Game of Life"
 class Golife::Game
   attr_accessor :playground, :width, :height, :generation
 
-  def initialize
+  def initialize(type = "random")
     self.generation = 0
     self.width = 10
     self.height = 10
-    self.playground = self.make_playground(self.height, self.width)
+    self.playground = Golife::Playgrounds.playground_for(type).build(height, width)
   end
 
   def play
@@ -21,19 +22,6 @@ class Golife::Game
       show_playground
       sleep SLEEP_INTERVAL
       next_generation
-    end
-  end
-
-  def make_playground(rows, cols, type = "random")
-    (1..rows).map do |i|
-      (1..cols).map do |j|
-      	if type == "empty"
-      	  cell_alive = false
-      	elsif type == "random"
-      	  cell_alive = Random.new.rand(0..1) == 1
-      	end
-      	Cell.new(i, j, cell_alive)
-      end
     end
   end
 
