@@ -2,4 +2,4 @@
 
 require "golife"
 
-Golife::Game.new.play
+Golife::Game.new(ARGV.shift).play

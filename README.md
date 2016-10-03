@@ -14,6 +14,11 @@ Just run the `golife` command as follows
     golife
 ```
 
+To run a specific pattern, give the pattern name as the first argument, e.g.
+```
+    golife blinker
+```
+
 ## Development
 To run in Development mode:
 ```
