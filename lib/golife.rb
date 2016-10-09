@@ -1,50 +1,39 @@
 # Conway's Game of Life Implementation in Ruby
 # Author: Vijay Soni(vs4vijay@gmail.com)
 require "golife/version"
+require "golife/TUI"
 
-SLEEP_INTERVAL = 0.2
-GAME_HEADING = "Game of Life"
 
 class Golife::Game
   attr_accessor :playground, :width, :height, :generation
 
   def initialize
     self.generation = 0
-    self.width = 10
-    self.height = 10
+    self.width = 30
+    self.height = 50
     self.playground = self.make_playground(self.height, self.width)
+    @tui = TUI.new
   end
 
   def play
     loop do
-      system "clear"
-      show_playground
-      sleep SLEEP_INTERVAL
+      @tui.draw(@generation, @playground)
       next_generation
     end
+  ensure
+    TUI.endwin
   end
 
   def make_playground(rows, cols, type = "random")
     (1..rows).map do |i|
       (1..cols).map do |j|
-      	if type == "empty"
-      	  cell_alive = false
-      	elsif type == "random"
-      	  cell_alive = Random.new.rand(0..1) == 1
-      	end
-      	Cell.new(i, j, cell_alive)
+        if type == "empty"
+          cell_alive = false
+        elsif type == "random"
+          cell_alive = Random.new.rand(0..1) == 1
+        end
+        Cell.new(i, j, cell_alive)
       end
-    end
-  end
-
-  def show_playground
-    puts "\t#{GAME_HEADING} [Generation: #{@generation}]"
-    @playground.each_with_index do |row, i|
-      print "|"
-      row.each_with_index do |cell, j|
-	      print " #{cell.alive ? '*' : ' '} |"
-      end
-      print "\n\n"
     end
   end
 
@@ -74,7 +63,7 @@ class Golife::Game
 
     def neighbours_of(cell)
       @playground.flatten.map do |n_cell|
-	       n_cell if [cell.x + 1, cell.x, cell.x - 1].include?(n_cell.x) && [cell.y + 1, cell.y, cell.y - 1].include?(n_cell.y)
+         n_cell if [cell.x + 1, cell.x, cell.x - 1].include?(n_cell.x) && [cell.y + 1, cell.y, cell.y - 1].include?(n_cell.y)
       end.compact.reject{|c| c.x == cell.x && c.y == cell.y}
     end
 
