@@ -3,6 +3,7 @@ require 'ncurses'
 class TUI
   SLEEP_INTERVAL = 0.2
   GAME_HEADING = "\tGame of Life [Generation: %d]"
+  CELL_TEMPLATE = " %s |"
 
   def initialize
     @window = Ncurses.initscr
@@ -18,7 +19,8 @@ class TUI
     playground.each_with_index do |row, i|
       @window.mvaddstr(i + 1, 0, "|")
       row.each_with_index do |cell, j|
-        @window.mvaddstr i + 1, (4 * j + 1) , " #{cell.alive ? '*' : ' '} |"
+        cell =  CELL_TEMPLATE % (cell.alive ? '*' : ' ')
+        @window.mvaddstr i + 1, (cell.length * j + 1) , cell
       end
     end
     Ncurses.refresh
